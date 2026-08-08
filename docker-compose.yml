@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: websurface
+      POSTGRES_PASSWORD: websurface_dev_only
+      POSTGRES_DB: websurface
+    ports:
+      - "5432:5432"
+    volumes:
+      - websurface_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U websurface -d websurface"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  websurface_postgres_data:

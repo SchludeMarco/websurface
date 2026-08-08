@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Sector {
+  id         String      @id @default(cuid())
+  slug       String      @unique
+  name       String
+  detail     String
+  subsectors Subsector[]
+  ideas      AppIdea[]   @relation("SectorToAppIdea")
+}
+
+model Subsector {
+  id       String @id @default(cuid())
+  slug     String @unique
+  name     String
+  sector   Sector @relation(fields: [sectorId], references: [id], onDelete: Cascade)
+  sectorId String
+}
+
+enum Effort {
+  NIEDRIG
+  MITTEL
+  HOCH
+}
+
+enum Impact {
+  NIEDRIG
+  MITTEL
+  HOCH
+}
+
+model AppIdea {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  title           String
+  description     String
+  effort          Effort
+  impact          Impact
+  tags            String[]
+  sectors         Sector[] @relation("SectorToAppIdea")
+  analysisResults AnalysisResult[]
+}
+
+// Persistiert werden ausschließlich aggregierte Kennzahlen aus der
+// CSV-Analyse (kein Personenbezug, keine Rohdaten) — siehe lib/csv-analysis.ts.
+model AnalysisResult {
+  id                String   @id @default(cuid())
+  createdAt         DateTime @default(now())
+  sourceLabel       String
+  metrics           Json
+  rationale         String
+  recommendedIdea   AppIdea? @relation(fields: [recommendedIdeaId], references: [id])
+  recommendedIdeaId String?
+}
