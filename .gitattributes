@@ -1,0 +1,4 @@
+# Hook-Skripte brauchen garantiert LF-Zeilenenden (Shebang-Parsing bricht
+# unter Unix/macOS mit CRLF), unabhaengig von core.autocrlf der Person, die
+# das Repo klont.
+.githooks/* text eol=lf

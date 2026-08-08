@@ -1,0 +1,16 @@
+#!/bin/sh
+# Spiegelt jeden Commit automatisch zu GitHub (origin), siehe README.
+# Bricht den Commit nicht ab, wenn der Push fehlschlaegt (z.B. offline) -
+# es wird nur eine Warnung ausgegeben.
+
+branch=$(git rev-parse --abbrev-ref HEAD)
+
+if git remote get-url origin >/dev/null 2>&1; then
+  if git push origin "$branch" 2>/tmp/websurface-post-commit-push.log; then
+    echo "post-commit: nach GitHub (origin/$branch) gepusht."
+  else
+    echo "post-commit: Push nach GitHub fehlgeschlagen (siehe /tmp/websurface-post-commit-push.log). Commit bleibt lokal erhalten."
+  fi
+else
+  echo "post-commit: kein 'origin'-Remote konfiguriert, ueberspringe Push."
+fi

@@ -29,6 +29,22 @@ Roadmap-Schritt (siehe Konzeptdokument, Abschnitt „Nicht im Scope“).
 Next.js 16 (App Router, TypeScript), Tailwind CSS 4, Prisma ORM 6 +
 PostgreSQL, `csv-parse`.
 
+## Repository & automatisches Mirroring
+
+Dieses Repo ist mit [github.com/SchludeMarco/websurface](https://github.com/SchludeMarco/websurface)
+verbunden. `core.hooksPath` zeigt auf `.githooks/` (statt des nicht
+versionierten `.git/hooks/`), damit der Auto-Push-Mechanismus mit dem Repo
+mitwandert. Nach einem frischen `git clone` einmalig aktivieren:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+Jeder lokale Commit wird danach automatisch per `post-commit`-Hook nach
+`origin` gepusht — kein manuelles `git push` mehr nötig. Schlägt der Push
+fehl (z. B. offline), bleibt der Commit lokal erhalten; siehe
+Hook-Ausgabe bzw. `/tmp/websurface-post-commit-push.log`.
+
 ## Lokales Setup
 
 Voraussetzungen: Node.js ≥ 20, Docker Desktop.
