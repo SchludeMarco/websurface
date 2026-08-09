@@ -45,6 +45,11 @@ Jeder lokale Commit wird danach automatisch per `post-commit`-Hook nach
 fehl (z. B. offline), bleibt der Commit lokal erhalten; siehe
 Hook-Ausgabe bzw. `/tmp/websurface-post-commit-push.log`.
 
+## Live-Demo
+
+[websurface-pb60yim1n-liquidizers-projects.vercel.app](https://websurface-pb60yim1n-liquidizers-projects.vercel.app)
+(Vercel + Neon Postgres)
+
 ## Lokales Setup
 
 Voraussetzungen: Node.js ≥ 20, Docker Desktop.
