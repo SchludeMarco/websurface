@@ -47,8 +47,7 @@ Hook-Ausgabe bzw. `/tmp/websurface-post-commit-push.log`.
 
 ## Live-Demo
 
-[websurface-pb60yim1n-liquidizers-projects.vercel.app](https://websurface-pb60yim1n-liquidizers-projects.vercel.app)
-(Vercel + Neon Postgres)
+[websurface.vercel.app](https://websurface.vercel.app) (Vercel + Neon Postgres)
 
 ## Lokales Setup
 
