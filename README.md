@@ -81,11 +81,28 @@ muss die Spalten `Datum,Kategorie,Produkt,Menge,Umsatz` enthalten.
 ## AWS-Infrastruktur (Portfolio-Nachweis, nicht deployed)
 
 Der Ordner [`infra/`](./infra) enthält den vollständigen AWS-Zielaufbau als
-CDK-Code (TypeScript) — Schwerpunkt Compute & Netzwerk (VPC, ECS/Fargate,
-Application Load Balancer) plus RDS, S3 und IAM. Es wurde bewusst **nicht
-deployed** (keine AWS-Zugangsdaten in dieser Umgebung vorhanden) — Ziel ist
-reviewbarer, `cdk synth`-fähiger Infrastructure-as-Code. Details siehe
-[`infra/README.md`](./infra/README.md).
+CDK-Code (TypeScript), verteilt auf drei Stacks (Network, Data, Compute).
+Es wurde bewusst **nicht deployed** (keine AWS-Zugangsdaten in dieser
+Entwicklungsumgebung) — Ziel ist reviewbarer, `cdk synth`-fähiger
+Infrastructure-as-Code, kein laufendes System.
+
+| AWS-Service | Rolle in dieser Architektur |
+|---|---|
+| **VPC** (2 AZs, 3 Subnetz-Ebenen) | Netzwerk-Fundament: public / private-mit-egress / isolated — trennt Internet-Zugang, App-Compute und Datenschicht |
+| **Application Load Balancer** | Öffentlicher Einstiegspunkt, verteilt Traffic auf die Fargate-Tasks |
+| **ECS / Fargate** | Serverloser Container-Betrieb der Next.js-App, 2–6 Tasks mit CPU-basiertem Auto Scaling |
+| **ECR** | Repository für das Container-Image (Platzhalter, kein realer Image-Push in diesem Prototyp) |
+| **RDS PostgreSQL** | Managed Datenbank in isoliertem Subnetz, kein Public Access, Storage-Verschlüsselung aktiv |
+| **S3** | Kurzlebige Zwischenspeicherung hochgeladener CSV-Dateien, SSE-KMS-verschlüsselt, automatische Löschung nach 24h |
+| **KMS** | Eigener Schlüssel für die S3-Verschlüsselung, mit Rotation |
+| **Secrets Manager** | Automatisch generierte, rotierbare DB-Zugangsdaten — nie im Code oder Environment hart codiert |
+| **IAM** | Getrennte Least-Privilege-Rollen für Task Execution (Image-Pull, Logs) und Task Runtime (DB-Secret-Read, S3-Zugriff) |
+| **CloudWatch Logs** | Zentrale Log-Sammlung der Container, 1 Monat Aufbewahrung |
+| **Security Groups** | Least-Privilege-Zugriffskette ALB → ECS → RDS, kein direkter Internet-Zugriff auf App oder DB |
+
+Ausführliche Architekturbeschreibung, Mermaid-Diagramm und begründete
+Design-Trade-offs (z. B. 1 statt 2 NAT Gateways, kein HTTPS-Zertifikat ohne
+reale Domain): [`infra/README.md`](./infra/README.md).
 
 ## Projektstruktur
 
