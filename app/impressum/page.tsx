@@ -1,11 +1,11 @@
 export default function ImpressumPage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
-      <h1 className="text-3xl font-bold tracking-tight text-slate-900">
+      <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
         Impressum
       </h1>
 
-      <div className="mt-6 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+      <div className="mt-6 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900 dark:border-amber-900 dark:bg-amber-950/60 dark:text-amber-200">
         <strong>Hinweis (Prototyp):</strong> Dieses Projekt ist ein
         Studien-/Portfolio-Prototyp ohne realen Geschäftsbetrieb. Alle mit{" "}
         <code>[…]</code> markierten Angaben sind Platzhalter. Vor einem
@@ -13,8 +13,8 @@ export default function ImpressumPage() {
         ersetzt werden — nichts an dieser Seite ist eine reale Anbieterkennzeichnung.
       </div>
 
-      <section className="mt-8 space-y-2 text-sm text-slate-700">
-        <h2 className="text-lg font-semibold text-slate-900">
+      <section className="mt-8 space-y-2 text-sm text-slate-700 dark:text-slate-300">
+        <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
           Angaben gemäß § 5 DDG (Digitale-Dienste-Gesetz)
         </h2>
         <p>[Firmenname / Rechtsform]</p>
@@ -23,21 +23,21 @@ export default function ImpressumPage() {
         <p>[Land]</p>
       </section>
 
-      <section className="mt-8 space-y-2 text-sm text-slate-700">
-        <h2 className="text-lg font-semibold text-slate-900">
+      <section className="mt-8 space-y-2 text-sm text-slate-700 dark:text-slate-300">
+        <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
           Vertreten durch
         </h2>
         <p>[Vor- und Nachname der Geschäftsführung]</p>
       </section>
 
-      <section className="mt-8 space-y-2 text-sm text-slate-700">
-        <h2 className="text-lg font-semibold text-slate-900">Kontakt</h2>
+      <section className="mt-8 space-y-2 text-sm text-slate-700 dark:text-slate-300">
+        <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Kontakt</h2>
         <p>Telefon: [Telefonnummer]</p>
         <p>E-Mail: [E-Mail-Adresse]</p>
       </section>
 
-      <section className="mt-8 space-y-2 text-sm text-slate-700">
-        <h2 className="text-lg font-semibold text-slate-900">
+      <section className="mt-8 space-y-2 text-sm text-slate-700 dark:text-slate-300">
+        <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
           Registereintrag
         </h2>
         <p>Eintragung im Handelsregister [falls zutreffend].</p>
@@ -45,8 +45,8 @@ export default function ImpressumPage() {
         <p>Registernummer: [Registernummer]</p>
       </section>
 
-      <section className="mt-8 space-y-2 text-sm text-slate-700">
-        <h2 className="text-lg font-semibold text-slate-900">
+      <section className="mt-8 space-y-2 text-sm text-slate-700 dark:text-slate-300">
+        <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
           Umsatzsteuer-Identifikationsnummer
         </h2>
         <p>
@@ -55,8 +55,8 @@ export default function ImpressumPage() {
         </p>
       </section>
 
-      <section className="mt-8 space-y-2 text-sm text-slate-700">
-        <h2 className="text-lg font-semibold text-slate-900">
+      <section className="mt-8 space-y-2 text-sm text-slate-700 dark:text-slate-300">
+        <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
           Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV
         </h2>
         <p>
@@ -65,8 +65,8 @@ export default function ImpressumPage() {
         </p>
       </section>
 
-      <section className="mt-8 space-y-2 text-sm text-slate-700">
-        <h2 className="text-lg font-semibold text-slate-900">
+      <section className="mt-8 space-y-2 text-sm text-slate-700 dark:text-slate-300">
+        <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
           EU-Streitschlichtung
         </h2>
         <p>
@@ -81,8 +81,8 @@ export default function ImpressumPage() {
         </p>
       </section>
 
-      <section className="mt-8 space-y-2 text-sm text-slate-700">
-        <h2 className="text-lg font-semibold text-slate-900">
+      <section className="mt-8 space-y-2 text-sm text-slate-700 dark:text-slate-300">
+        <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
           Haftung für Inhalte
         </h2>
         <p>
@@ -95,8 +95,8 @@ export default function ImpressumPage() {
         </p>
       </section>
 
-      <section className="mt-8 space-y-2 text-sm text-slate-700">
-        <h2 className="text-lg font-semibold text-slate-900">
+      <section className="mt-8 space-y-2 text-sm text-slate-700 dark:text-slate-300">
+        <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
           Haftung für Links
         </h2>
         <p>
@@ -106,8 +106,8 @@ export default function ImpressumPage() {
         </p>
       </section>
 
-      <section className="mt-8 space-y-2 text-sm text-slate-700">
-        <h2 className="text-lg font-semibold text-slate-900">Urheberrecht</h2>
+      <section className="mt-8 space-y-2 text-sm text-slate-700 dark:text-slate-300">
+        <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Urheberrecht</h2>
         <p>
           Die durch die Betreiber erstellten Inhalte und Werke auf diesen
           Seiten unterliegen dem deutschen Urheberrecht. Beiträge Dritter

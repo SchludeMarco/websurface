@@ -23,13 +23,13 @@ export default function HomePage() {
   return (
     <div className="mx-auto max-w-5xl px-6 py-16">
       <div className="max-w-2xl">
-        <p className="text-sm font-semibold uppercase tracking-wide text-blue-600">
+        <p className="text-sm font-semibold uppercase tracking-wide text-blue-600 dark:text-blue-400">
           Prototyp — Studienprojekt
         </p>
-        <h1 className="mt-3 text-4xl font-bold tracking-tight text-slate-900">
+        <h1 className="mt-3 text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
           Passende App-Ideen für Ihr mittelständisches Unternehmen
         </h1>
-        <p className="mt-6 text-lg text-slate-600">
+        <p className="mt-6 text-lg text-slate-600 dark:text-slate-400">
           WebSurface schlägt geprüfte, praxisnahe App-Konzepte vor — entweder anhand
           Ihrer Branche oder, optional, anhand einer echten Analyse anonymisierter
           Geschäftsdaten. WebSurface generiert keinen automatischen Produktivcode,
@@ -44,7 +44,7 @@ export default function HomePage() {
           </Link>
           <Link
             href="/analyse"
-            className="rounded-md border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-100"
+            className="rounded-md border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
           >
             Geschäftsdaten analysieren
           </Link>
@@ -52,25 +52,25 @@ export default function HomePage() {
       </div>
 
       <section className="mt-20">
-        <h2 className="text-xl font-semibold text-slate-900">
+        <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
           Die vier Kernbereiche des Mittelstands
         </h2>
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
           {sectors.map((sector) => (
             <div
               key={sector.name}
-              className="rounded-lg border border-slate-200 bg-white p-5"
+              className="rounded-lg border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900"
             >
-              <h3 className="font-semibold text-slate-900">{sector.name}</h3>
-              <p className="mt-1 text-sm text-slate-500">{sector.detail}</p>
+              <h3 className="font-semibold text-slate-900 dark:text-slate-100">{sector.name}</h3>
+              <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{sector.detail}</p>
             </div>
           ))}
         </div>
       </section>
 
-      <section className="mt-16 rounded-lg border border-amber-200 bg-amber-50 p-6">
-        <h2 className="font-semibold text-amber-900">Datenschutz &amp; Transparenz</h2>
-        <p className="mt-2 text-sm text-amber-800">
+      <section className="mt-16 rounded-lg border border-amber-200 bg-amber-50 p-6 dark:border-amber-900 dark:bg-amber-950/60">
+        <h2 className="font-semibold text-amber-900 dark:text-amber-200">Datenschutz &amp; Transparenz</h2>
+        <p className="mt-2 text-sm text-amber-800 dark:text-amber-300">
           Bei der optionalen Datenanalyse werden Rohdaten ausschließlich im
           Arbeitsspeicher verarbeitet und nicht dauerhaft gespeichert — es
           entstehen nur aggregierte Kennzahlen. Empfehlungen werden regelbasiert

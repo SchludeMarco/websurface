@@ -1,19 +1,19 @@
 export default function DatenschutzPage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
-      <h1 className="text-3xl font-bold tracking-tight text-slate-900">
+      <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
         Datenschutzerklärung
       </h1>
 
-      <div className="mt-6 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+      <div className="mt-6 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900 dark:border-amber-900 dark:bg-amber-950/60 dark:text-amber-200">
         <strong>Hinweis (Prototyp):</strong> Diese Erklärung beschreibt
         transparent den tatsächlichen Stand dieses Prototyps — inklusive der
         Punkte, die für einen echten Produktivbetrieb noch fehlen. Es werden
         bewusst keine Mechanismen behauptet, die im Code nicht existieren.
       </div>
 
-      <section className="mt-8 space-y-2 text-sm text-slate-700">
-        <h2 className="text-lg font-semibold text-slate-900">
+      <section className="mt-8 space-y-2 text-sm text-slate-700 dark:text-slate-300">
+        <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
           1. Verantwortlicher
         </h2>
         <p>
@@ -26,8 +26,8 @@ export default function DatenschutzPage() {
         </p>
       </section>
 
-      <section className="mt-8 space-y-2 text-sm text-slate-700">
-        <h2 className="text-lg font-semibold text-slate-900">
+      <section className="mt-8 space-y-2 text-sm text-slate-700 dark:text-slate-300">
+        <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
           2. Server-Logfiles
         </h2>
         <p>
@@ -39,19 +39,22 @@ export default function DatenschutzPage() {
         </p>
       </section>
 
-      <section className="mt-8 space-y-2 text-sm text-slate-700">
-        <h2 className="text-lg font-semibold text-slate-900">
+      <section className="mt-8 space-y-2 text-sm text-slate-700 dark:text-slate-300">
+        <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
           3. Branchenauswahl (Onboarding)
         </h2>
         <p>
-          Ihre Auswahl der Kernbereiche/Unterbranchen wird ausschließlich als
-          URL-Parameter zwischen den Seiten weitergegeben und nicht
-          personenbezogen serverseitig gespeichert.
+          Ihre Auswahl der Kernbereiche/Unterbranchen wird als URL-Parameter
+          zwischen den Seiten weitergegeben und zusätzlich im
+          <code>localStorage</code> Ihres Browsers gespeichert, damit sie
+          seitenübergreifend oben angezeigt werden kann. Diese Daten
+          verbleiben ausschließlich auf Ihrem Gerät und werden nicht an den
+          Server übertragen oder personenbezogen serverseitig gespeichert.
         </p>
       </section>
 
-      <section className="mt-8 space-y-2 text-sm text-slate-700">
-        <h2 className="text-lg font-semibold text-slate-900">
+      <section className="mt-8 space-y-2 text-sm text-slate-700 dark:text-slate-300">
+        <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
           4. Optionale Datenanalyse (CSV-Upload)
         </h2>
         <p>
@@ -88,8 +91,8 @@ export default function DatenschutzPage() {
         </ul>
       </section>
 
-      <section className="mt-8 space-y-2 text-sm text-slate-700">
-        <h2 className="text-lg font-semibold text-slate-900">
+      <section className="mt-8 space-y-2 text-sm text-slate-700 dark:text-slate-300">
+        <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
           5. Automatisiert erstellte Empfehlungen (Art. 22 DSGVO, EU AI Act)
         </h2>
         <p>
@@ -105,8 +108,8 @@ export default function DatenschutzPage() {
         </p>
       </section>
 
-      <section className="mt-8 space-y-2 text-sm text-slate-700">
-        <h2 className="text-lg font-semibold text-slate-900">
+      <section className="mt-8 space-y-2 text-sm text-slate-700 dark:text-slate-300">
+        <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
           6. Speicherdauer
         </h2>
         <p>
@@ -118,21 +121,24 @@ export default function DatenschutzPage() {
         </p>
       </section>
 
-      <section className="mt-8 space-y-2 text-sm text-slate-700">
-        <h2 className="text-lg font-semibold text-slate-900">
+      <section className="mt-8 space-y-2 text-sm text-slate-700 dark:text-slate-300">
+        <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
           7. Cookies & Tracking
         </h2>
         <p>
           Diese Anwendung verwendet keine Analyse-, Marketing- oder
           Tracking-Cookies und keine Drittanbieter-Dienste. Es werden nur
           technisch notwendige, temporäre Session-Daten des Frameworks
-          verwendet. Ein Cookie-Consent-Banner nach § 25 TTDSG ist daher
-          nicht erforderlich.
+          verwendet. Zusätzlich speichert die App Ihre Branchenauswahl und
+          Ihre Hell-/Dunkelmodus-Einstellung rein clientseitig im
+          <code>localStorage</code> Ihres Browsers (keine Cookies, keine
+          Übertragung an den Server, kein Tracking). Ein
+          Cookie-Consent-Banner nach § 25 TTDSG ist daher nicht erforderlich.
         </p>
       </section>
 
-      <section className="mt-8 space-y-2 text-sm text-slate-700">
-        <h2 className="text-lg font-semibold text-slate-900">
+      <section className="mt-8 space-y-2 text-sm text-slate-700 dark:text-slate-300">
+        <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
           8. Hosting
         </h2>
         <p>
@@ -143,8 +149,8 @@ export default function DatenschutzPage() {
         </p>
       </section>
 
-      <section className="mt-8 space-y-2 text-sm text-slate-700">
-        <h2 className="text-lg font-semibold text-slate-900">
+      <section className="mt-8 space-y-2 text-sm text-slate-700 dark:text-slate-300">
+        <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
           9. Ihre Rechte
         </h2>
         <p>
