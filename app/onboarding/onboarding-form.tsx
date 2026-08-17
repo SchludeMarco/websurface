@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Sector, Subsector } from "@prisma/client";
-import { BRANCH_CHANGE_EVENT, BRANCH_STORAGE_KEY } from "../branch-storage";
+import { BRANCH_CHANGE_EVENT, BRANCH_STORAGE_KEY, readStoredBranchNames } from "../branch-storage";
 
 type SectorWithSubsectors = Sector & { subsectors: Subsector[] };
 
@@ -14,6 +14,17 @@ export default function OnboardingForm({
 }) {
   const router = useRouter();
   const [selected, setSelected] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    const storedNames = new Set(readStoredBranchNames());
+    if (storedNames.size === 0) return;
+    const matchingSlugs = sectors
+      .filter((sector) => storedNames.has(sector.name))
+      .map((sector) => sector.slug);
+    if (matchingSlugs.length > 0) {
+      setSelected(new Set(matchingSlugs));
+    }
+  }, [sectors]);
 
   function toggle(slug: string) {
     setSelected((prev) => {

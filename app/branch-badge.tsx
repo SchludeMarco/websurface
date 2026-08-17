@@ -2,28 +2,14 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { BRANCH_CHANGE_EVENT, BRANCH_STORAGE_KEY } from "./branch-storage";
-
-function readBranchNames(): string[] {
-  const raw = window.localStorage.getItem(BRANCH_STORAGE_KEY);
-  if (!raw) return [];
-  try {
-    const parsed = JSON.parse(raw);
-    if (Array.isArray(parsed)) return parsed;
-  } catch {
-    // Legacy format from before branches were stored as JSON: a plain
-    // ", "-joined string. Recover it instead of dropping the selection.
-    return raw.split(", ").filter(Boolean);
-  }
-  return [];
-}
+import { BRANCH_CHANGE_EVENT, readStoredBranchNames } from "./branch-storage";
 
 export default function BranchBadge() {
   const [names, setNames] = useState<string[]>([]);
 
   useEffect(() => {
     function sync() {
-      setNames(readBranchNames());
+      setNames(readStoredBranchNames());
     }
     sync();
     window.addEventListener(BRANCH_CHANGE_EVENT, sync);
