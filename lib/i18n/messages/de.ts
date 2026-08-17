@@ -5,7 +5,6 @@ const de = {
       "WebSurface findet passende App-Konzepte für mittelständische Unternehmen — branchenbasiert oder per Analyse anonymisierter Geschäftsdaten.",
   },
   nav: {
-    onboarding: "Branchen wählen",
     ideen: "App-Ideen",
     analyse: "Datenanalyse",
     impressum: "Impressum",

@@ -7,7 +7,6 @@ const en: Messages = {
       "WebSurface finds suitable app concepts for small and medium-sized businesses — based on your industry or on an analysis of anonymized business data.",
   },
   nav: {
-    onboarding: "Choose industry",
     ideen: "App ideas",
     analyse: "Data analysis",
     impressum: "Legal notice",

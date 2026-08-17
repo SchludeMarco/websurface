@@ -7,7 +7,6 @@ const es: Messages = {
       "WebSurface encuentra conceptos de apps adecuados para pequeñas y medianas empresas — según su sector o mediante un análisis de datos empresariales anonimizados.",
   },
   nav: {
-    onboarding: "Elegir sector",
     ideen: "Ideas de apps",
     analyse: "Análisis de datos",
     impressum: "Aviso legal",

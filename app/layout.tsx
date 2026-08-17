@@ -23,7 +23,6 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   const messages = messagesByLocale[locale];
 
   const navItems = [
-    { href: "/onboarding", label: messages.nav.onboarding },
     { href: "/ideen", label: messages.nav.ideen },
     { href: "/analyse", label: messages.nav.analyse },
   ];
