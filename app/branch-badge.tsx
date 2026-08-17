@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BRANCH_CHANGE_EVENT, readStoredBranchNames } from "./branch-storage";
+import { useI18n } from "@/lib/i18n/client";
 
 export default function BranchBadge() {
+  const { messages } = useI18n();
   const [names, setNames] = useState<string[]>([]);
 
   useEffect(() => {
@@ -23,18 +25,18 @@ export default function BranchBadge() {
   if (names.length === 0) {
     return (
       <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
-        Noch keine Branche ausgewählt ·{" "}
+        {messages.branchBadge.none} ·{" "}
         <Link
           href="/onboarding"
           className="font-medium text-blue-600 hover:underline dark:text-blue-400"
         >
-          Branchen wählen
+          {messages.branchBadge.choose}
         </Link>
       </p>
     );
   }
 
-  const label = names.length === 1 ? "Ausgewählte Branche" : "Ausgewählte Branchen";
+  const label = names.length === 1 ? messages.branchBadge.selectedOne : messages.branchBadge.selectedMany;
 
   return (
     <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
@@ -44,7 +46,7 @@ export default function BranchBadge() {
         href="/onboarding"
         className="font-medium text-blue-600 hover:underline dark:text-blue-400"
       >
-        Ändern
+        {messages.branchBadge.change}
       </Link>
     </p>
   );

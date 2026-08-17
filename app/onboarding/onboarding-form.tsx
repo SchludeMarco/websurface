@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Sector, Subsector } from "@prisma/client";
 import { BRANCH_CHANGE_EVENT, BRANCH_STORAGE_KEY, readStoredBranchNames } from "../branch-storage";
+import { useI18n } from "@/lib/i18n/client";
 
 type SectorWithSubsectors = Sector & { subsectors: Subsector[] };
 
@@ -13,6 +14,7 @@ export default function OnboardingForm({
   sectors: SectorWithSubsectors[];
 }) {
   const router = useRouter();
+  const { messages } = useI18n();
   const [selected, setSelected] = useState<Set<string>>(new Set());
 
   useEffect(() => {
@@ -88,7 +90,7 @@ export default function OnboardingForm({
         disabled={selected.size === 0}
         className="rounded-md bg-blue-600 px-5 py-3 text-sm font-semibold text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-300 dark:disabled:bg-slate-700 dark:disabled:text-slate-400"
       >
-        App-Ideen anzeigen
+        {messages.onboarding.submit}
       </button>
     </form>
   );

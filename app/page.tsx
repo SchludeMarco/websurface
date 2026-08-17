@@ -1,62 +1,41 @@
 import Link from "next/link";
+import { getLocale } from "@/lib/i18n/get-locale";
+import { messagesByLocale } from "@/lib/i18n/messages";
 
-const sectors = [
-  {
-    name: "Dienstleistungen",
-    detail: "IT & Beratung, Reinigung/Gebäudeservice, Finanz- & Personaldienstleistungen",
-  },
-  {
-    name: "Handel",
-    detail: "Großhandel, Einzelhandel, Kfz-Handel",
-  },
-  {
-    name: "Industrie & Verarbeitendes Gewerbe",
-    detail: "Maschinenbau, Metallverarbeitung, Elektrotechnik",
-  },
-  {
-    name: "Baugewerbe & Handwerk",
-    detail: "Bauhauptgewerbe, Ausbaugewerbe, klassisches Handwerk",
-  },
-];
+export default async function HomePage() {
+  const locale = await getLocale();
+  const { home } = messagesByLocale[locale];
 
-export default function HomePage() {
   return (
     <div className="mx-auto max-w-5xl px-6 py-16">
       <div className="max-w-2xl">
         <p className="text-sm font-semibold uppercase tracking-wide text-blue-600 dark:text-blue-400">
-          Prototyp — Studienprojekt
+          {home.eyebrow}
         </p>
         <h1 className="mt-3 text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
-          Passende App-Ideen für Ihr mittelständisches Unternehmen
+          {home.title}
         </h1>
-        <p className="mt-6 text-lg text-slate-600 dark:text-slate-400">
-          WebSurface schlägt geprüfte, praxisnahe App-Konzepte vor — entweder anhand
-          Ihrer Branche oder, optional, anhand einer echten Analyse anonymisierter
-          Geschäftsdaten. WebSurface generiert keinen automatischen Produktivcode,
-          sondern belastbare Konzept-Briefs als Entscheidungsgrundlage.
-        </p>
+        <p className="mt-6 text-lg text-slate-600 dark:text-slate-400">{home.description}</p>
         <div className="mt-8 flex flex-wrap gap-4">
           <Link
             href="/onboarding"
             className="rounded-md bg-blue-600 px-5 py-3 text-sm font-semibold text-white hover:bg-blue-700"
           >
-            Branche auswählen
+            {home.ctaBranch}
           </Link>
           <Link
             href="/analyse"
             className="rounded-md border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
           >
-            Geschäftsdaten analysieren
+            {home.ctaAnalyse}
           </Link>
         </div>
       </div>
 
       <section className="mt-20">
-        <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
-          Die vier Kernbereiche des Mittelstands
-        </h2>
+        <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">{home.sectorsTitle}</h2>
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
-          {sectors.map((sector) => (
+          {home.sectors.map((sector) => (
             <div
               key={sector.name}
               className="rounded-lg border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900"
@@ -69,14 +48,11 @@ export default function HomePage() {
       </section>
 
       <section className="mt-16 rounded-lg border border-amber-200 bg-amber-50 p-6 dark:border-amber-900 dark:bg-amber-950/60">
-        <h2 className="font-semibold text-amber-900 dark:text-amber-200">Datenschutz &amp; Transparenz</h2>
+        <h2 className="font-semibold text-amber-900 dark:text-amber-200">{home.privacyTitle}</h2>
         <p className="mt-2 text-sm text-amber-800 dark:text-amber-300">
-          Bei der optionalen Datenanalyse werden Rohdaten ausschließlich im
-          Arbeitsspeicher verarbeitet und nicht dauerhaft gespeichert — es
-          entstehen nur aggregierte Kennzahlen. Empfehlungen werden regelbasiert
-          erzeugt und automatisiert gekennzeichnet. Details siehe{" "}
+          {home.privacyBodyPre}{" "}
           <Link href="/datenschutz" className="underline">
-            Datenschutzerklärung
+            {home.privacyLinkText}
           </Link>
           .
         </p>

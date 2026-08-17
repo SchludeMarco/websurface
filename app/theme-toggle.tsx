@@ -1,8 +1,12 @@
 "use client";
 
+import { useI18n } from "@/lib/i18n/client";
+
 const THEME_STORAGE_KEY = "websurface:theme";
 
 export default function ThemeToggle() {
+  const { messages } = useI18n();
+
   function toggle() {
     const root = document.documentElement;
     const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
@@ -14,7 +18,7 @@ export default function ThemeToggle() {
     <button
       type="button"
       onClick={toggle}
-      aria-label="Hell-/Dunkelmodus umschalten"
+      aria-label={messages.themeToggle.ariaLabel}
       className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-slate-300 bg-white text-slate-600 transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
     >
       <svg

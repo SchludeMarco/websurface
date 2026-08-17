@@ -3,22 +3,33 @@ import Link from "next/link";
 import "./globals.css";
 import BranchBadge from "./branch-badge";
 import ThemeToggle from "./theme-toggle";
+import LanguageSwitcher from "./language-switcher";
+import { I18nProvider } from "@/lib/i18n/client";
+import { getLocale } from "@/lib/i18n/get-locale";
+import { messagesByLocale } from "@/lib/i18n/messages";
+import { interpolate } from "@/lib/i18n/interpolate";
 
-export const metadata: Metadata = {
-  title: "WebSurface — App-Ideen für den Mittelstand",
-  description:
-    "WebSurface findet passende App-Konzepte für mittelständische Unternehmen — branchenbasiert oder per Analyse anonymisierter Geschäftsdaten.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const messages = messagesByLocale[locale];
+  return {
+    title: messages.meta.title,
+    description: messages.meta.description,
+  };
+}
 
-const navItems = [
-  { href: "/onboarding", label: "Branchen wählen" },
-  { href: "/ideen", label: "App-Ideen" },
-  { href: "/analyse", label: "Datenanalyse" },
-];
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const locale = await getLocale();
+  const messages = messagesByLocale[locale];
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+  const navItems = [
+    { href: "/onboarding", label: messages.nav.onboarding },
+    { href: "/ideen", label: messages.nav.ideen },
+    { href: "/analyse", label: messages.nav.analyse },
+  ];
+
   return (
-    <html lang="de" data-theme="light" className="h-full antialiased" suppressHydrationWarning>
+    <html lang={locale} data-theme="light" className="h-full antialiased" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -27,44 +38,49 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         />
       </head>
       <body className="min-h-full flex flex-col bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
-        <header className="border-b border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
-          <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-4">
-            <div>
-              <Link href="/" className="text-lg font-semibold tracking-tight">
-                WebSurface
-              </Link>
-              <BranchBadge />
-            </div>
-            <nav className="flex gap-6 text-sm font-medium text-slate-600 dark:text-slate-400">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="hover:text-slate-900 dark:hover:text-slate-100"
-                >
-                  {item.label}
+        <I18nProvider locale={locale} messages={messages}>
+          <header className="border-b border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
+            <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-4">
+              <div>
+                <Link href="/" className="text-lg font-semibold tracking-tight">
+                  WebSurface
                 </Link>
-              ))}
-            </nav>
-            <ThemeToggle />
-          </div>
-        </header>
-
-        <main className="flex-1">{children}</main>
-
-        <footer className="border-t border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
-          <div className="mx-auto max-w-5xl px-6 py-8 text-sm text-slate-500 dark:text-slate-400">
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-              <Link href="/impressum" className="hover:text-slate-900 dark:hover:text-slate-100">
-                Impressum
-              </Link>
-              <Link href="/datenschutz" className="hover:text-slate-900 dark:hover:text-slate-100">
-                Datenschutz
-              </Link>
-              <span>© {new Date().getFullYear()} WebSurface — Prototyp, kein produktives Angebot</span>
+                <BranchBadge />
+              </div>
+              <nav className="flex gap-6 text-sm font-medium text-slate-600 dark:text-slate-400">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="hover:text-slate-900 dark:hover:text-slate-100"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </nav>
+              <div className="flex shrink-0 items-center gap-2">
+                <LanguageSwitcher />
+                <ThemeToggle />
+              </div>
             </div>
-          </div>
-        </footer>
+          </header>
+
+          <main className="flex-1">{children}</main>
+
+          <footer className="border-t border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
+            <div className="mx-auto max-w-5xl px-6 py-8 text-sm text-slate-500 dark:text-slate-400">
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+                <Link href="/impressum" className="hover:text-slate-900 dark:hover:text-slate-100">
+                  {messages.nav.impressum}
+                </Link>
+                <Link href="/datenschutz" className="hover:text-slate-900 dark:hover:text-slate-100">
+                  {messages.nav.datenschutz}
+                </Link>
+                <span>{interpolate(messages.footer.copyright, { year: new Date().getFullYear() })}</span>
+              </div>
+            </div>
+          </footer>
+        </I18nProvider>
       </body>
     </html>
   );

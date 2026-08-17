@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import type { AnalysisMetrics } from "@/lib/csv-analysis";
+import { useI18n } from "@/lib/i18n/client";
+import { interpolate } from "@/lib/i18n/interpolate";
 
 type AnalyzeResponse = {
   metrics: AnalysisMetrics;
@@ -11,6 +13,8 @@ type AnalyzeResponse = {
 };
 
 export default function AnalysePage() {
+  const { locale, messages } = useI18n();
+  const { analyse } = messages;
   const [file, setFile] = useState<File | null>(null);
   const [consent, setConsent] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -45,11 +49,11 @@ export default function AnalysePage() {
       });
       const data = await response.json();
       if (!response.ok) {
-        throw new Error(data.error ?? "Unbekannter Fehler bei der Analyse.");
+        throw new Error(data.error ?? analyse.errorUnknownAnalysis);
       }
       setResult(data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Unbekannter Fehler.");
+      setError(err instanceof Error ? err.message : analyse.errorUnknown);
     } finally {
       setLoading(false);
     }
@@ -58,20 +62,14 @@ export default function AnalysePage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
       <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
-        Geschäftsdaten analysieren
+        {analyse.title}
       </h1>
-      <p className="mt-3 text-slate-600 dark:text-slate-400">
-        Laden Sie eine CSV-Datei mit Verkaufsdaten hoch (Spalten: Datum,
-        Kategorie, Produkt, Menge, Umsatz). Die Datei wird ausschließlich im
-        Arbeitsspeicher des Servers verarbeitet und danach verworfen —
-        gespeichert werden nur aggregierte Kennzahlen, keine Einzeldaten.
-      </p>
+      <p className="mt-3 text-slate-600 dark:text-slate-400">{analyse.description}</p>
 
       <div className="mt-6 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900 dark:border-amber-900 dark:bg-amber-950/60 dark:text-amber-200">
-        Bitte laden Sie ausschließlich anonymisierte Daten ohne Personenbezug
-        hoch (keine Namen, Kundennummern o.Ä.). Details siehe{" "}
+        {analyse.noticePre}{" "}
         <a href="/datenschutz" className="underline">
-          Datenschutzerklärung
+          {analyse.noticeLinkText}
         </a>
         .
       </div>
@@ -79,7 +77,7 @@ export default function AnalysePage() {
       <form onSubmit={handleSubmit} className="mt-8 space-y-5">
         <div>
           <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
-            CSV-Datei
+            {analyse.csvLabel}
           </label>
           <input
             type="file"
@@ -92,11 +90,11 @@ export default function AnalysePage() {
             onClick={loadSampleFile}
             className="mt-2 text-sm font-medium text-blue-600 hover:underline dark:text-blue-400"
           >
-            Beispieldaten verwenden (fiktiver Einzelhändler)
+            {analyse.sampleButton}
           </button>
           {file && (
             <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
-              Ausgewählt: {file.name} ({Math.round(file.size / 1024)} KB)
+              {interpolate(analyse.selectedFile, { name: file.name, size: Math.round(file.size / 1024) })}
             </p>
           )}
         </div>
@@ -108,8 +106,7 @@ export default function AnalysePage() {
             onChange={(e) => setConsent(e.target.checked)}
             className="mt-1 h-4 w-4"
           />
-          Ich bestätige, dass diese Daten anonymisiert sind und keinen
-          Personenbezug enthalten.
+          {analyse.consentLabel}
         </label>
 
         <button
@@ -117,7 +114,7 @@ export default function AnalysePage() {
           disabled={!file || !consent || loading}
           className="rounded-md bg-blue-600 px-5 py-3 text-sm font-semibold text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-300 dark:disabled:bg-slate-700 dark:disabled:text-slate-400"
         >
-          {loading ? "Analysiere…" : "Analyse starten"}
+          {loading ? analyse.submitting : analyse.submit}
         </button>
       </form>
 
@@ -131,10 +128,10 @@ export default function AnalysePage() {
         <div className="mt-10 space-y-6">
           <div className="rounded-lg border border-blue-200 bg-blue-50 p-5 dark:border-blue-900 dark:bg-blue-950/40">
             <p className="text-xs font-semibold uppercase tracking-wide text-blue-700 dark:text-blue-300">
-              Automatisiert erstellte Empfehlung
+              {analyse.automatedLabel}
             </p>
             <h2 className="mt-2 text-xl font-bold text-slate-900 dark:text-slate-100">
-              {result.recommendedIdea?.title ?? "Keine Empfehlung ermittelt"}
+              {result.recommendedIdea?.title ?? analyse.noRecommendation}
             </h2>
             {result.recommendedIdea && (
               <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
@@ -146,38 +143,38 @@ export default function AnalysePage() {
           </div>
 
           <div className="rounded-lg border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
-            <h3 className="font-semibold text-slate-900 dark:text-slate-100">Berechnete Kennzahlen</h3>
+            <h3 className="font-semibold text-slate-900 dark:text-slate-100">{analyse.metricsTitle}</h3>
             <dl className="mt-3 grid grid-cols-2 gap-4 text-sm">
               <div>
-                <dt className="text-slate-500 dark:text-slate-400">Datenzeilen</dt>
+                <dt className="text-slate-500 dark:text-slate-400">{analyse.rowCount}</dt>
                 <dd className="font-medium text-slate-900 dark:text-slate-100">
                   {result.metrics.rowCount}
                 </dd>
               </div>
               <div>
-                <dt className="text-slate-500 dark:text-slate-400">Gesamtumsatz</dt>
+                <dt className="text-slate-500 dark:text-slate-400">{analyse.totalRevenue}</dt>
                 <dd className="font-medium text-slate-900 dark:text-slate-100">
-                  {formatCurrency(result.metrics.totalRevenue)}
+                  {formatCurrency(result.metrics.totalRevenue, locale)}
                 </dd>
               </div>
             </dl>
 
             <h4 className="mt-5 text-sm font-semibold text-slate-900 dark:text-slate-100">
-              Umsatz je Kategorie
+              {analyse.revenueByCategory}
             </h4>
             <ul className="mt-2 space-y-1 text-sm">
               {result.metrics.revenueByCategory.map((c) => (
                 <li key={c.category} className="flex justify-between">
                   <span className="text-slate-600 dark:text-slate-400">{c.category}</span>
                   <span className="text-slate-900 dark:text-slate-100">
-                    {formatCurrency(c.revenue)} ({(c.share * 100).toFixed(0)}%)
+                    {formatCurrency(c.revenue, locale)} ({(c.share * 100).toFixed(0)}%)
                   </span>
                 </li>
               ))}
             </ul>
 
             <h4 className="mt-5 text-sm font-semibold text-slate-900 dark:text-slate-100">
-              Saisonalität je Kategorie (Faktor Höchst-/Tiefstmonat)
+              {analyse.seasonality}
             </h4>
             <ul className="mt-2 space-y-1 text-sm">
               {result.metrics.categorySeasonality.map((c) => (
@@ -190,10 +187,7 @@ export default function AnalysePage() {
               ))}
             </ul>
 
-            <p className="mt-5 text-xs text-slate-400 dark:text-slate-500">
-              Rohdaten wurden nicht gespeichert — nur die oben gezeigten
-              aggregierten Kennzahlen.
-            </p>
+            <p className="mt-5 text-xs text-slate-400 dark:text-slate-500">{analyse.rawDataNotice}</p>
           </div>
         </div>
       )}
@@ -201,8 +195,9 @@ export default function AnalysePage() {
   );
 }
 
-function formatCurrency(value: number): string {
-  return new Intl.NumberFormat("de-DE", {
+function formatCurrency(value: number, locale: string): string {
+  const localeTag = locale === "de" ? "de-DE" : locale === "es" ? "es-ES" : "en-GB";
+  return new Intl.NumberFormat(localeTag, {
     style: "currency",
     currency: "EUR",
     maximumFractionDigits: 0,

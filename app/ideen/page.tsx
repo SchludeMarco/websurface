@@ -1,23 +1,16 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
-
-const effortLabel: Record<string, string> = {
-  NIEDRIG: "Niedriger Aufwand",
-  MITTEL: "Mittlerer Aufwand",
-  HOCH: "Hoher Aufwand",
-};
-
-const impactLabel: Record<string, string> = {
-  NIEDRIG: "Geringer Nutzen",
-  MITTEL: "Mittlerer Nutzen",
-  HOCH: "Hoher Nutzen",
-};
+import { getLocale } from "@/lib/i18n/get-locale";
+import { messagesByLocale } from "@/lib/i18n/messages";
+import { interpolate } from "@/lib/i18n/interpolate";
 
 export default async function IdeenPage({
   searchParams,
 }: {
   searchParams: Promise<{ sectors?: string }>;
 }) {
+  const locale = await getLocale();
+  const { ideen } = messagesByLocale[locale];
   const params = await searchParams;
   const sectorSlugs = params.sectors
     ? params.sectors.split(",").map((s) => s.trim()).filter(Boolean)
@@ -39,11 +32,11 @@ export default async function IdeenPage({
       <div className="flex items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
-            {sectorSlugs.length > 0 ? "Passende App-Ideen" : "Alle App-Ideen"}
+            {sectorSlugs.length > 0 ? ideen.titleFiltered : ideen.titleAll}
           </h1>
           {allSectors.length > 0 && (
             <p className="mt-2 text-slate-600 dark:text-slate-400">
-              Gefiltert nach: {allSectors.map((s) => s.name).join(", ")}
+              {interpolate(ideen.filteredBy, { names: allSectors.map((s) => s.name).join(", ") })}
             </p>
           )}
         </div>
@@ -51,14 +44,12 @@ export default async function IdeenPage({
           href="/onboarding"
           className="shrink-0 rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
         >
-          Auswahl ändern
+          {ideen.changeSelection}
         </Link>
       </div>
 
       {ideas.length === 0 ? (
-        <p className="mt-10 text-slate-500 dark:text-slate-400">
-          Keine Ideen für diese Auswahl gefunden.
-        </p>
+        <p className="mt-10 text-slate-500 dark:text-slate-400">{ideen.noIdeas}</p>
       ) : (
         <ul className="mt-10 space-y-4">
           {ideas.map((idea) => (
@@ -72,10 +63,10 @@ export default async function IdeenPage({
                 </h2>
                 <div className="flex gap-2 text-xs">
                   <span className="rounded-full bg-slate-100 px-3 py-1 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
-                    {effortLabel[idea.effort]}
+                    {ideen.effort[idea.effort as keyof typeof ideen.effort]}
                   </span>
                   <span className="rounded-full bg-blue-100 px-3 py-1 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
-                    {impactLabel[idea.impact]}
+                    {ideen.impact[idea.impact as keyof typeof ideen.impact]}
                   </span>
                 </div>
               </div>
