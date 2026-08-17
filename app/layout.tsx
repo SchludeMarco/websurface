@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 const navItems = [
-  { href: "/onboarding", label: "Branche wählen" },
+  { href: "/onboarding", label: "Branchen wählen" },
   { href: "/ideen", label: "App-Ideen" },
   { href: "/analyse", label: "Datenanalyse" },
 ];

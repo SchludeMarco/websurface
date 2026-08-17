@@ -42,7 +42,7 @@ export default function BranchBadge() {
           href="/onboarding"
           className="font-medium text-blue-600 hover:underline dark:text-blue-400"
         >
-          Branche wählen
+          Branchen wählen
         </Link>
       </p>
     );
