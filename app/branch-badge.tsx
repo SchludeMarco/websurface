@@ -4,12 +4,26 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BRANCH_CHANGE_EVENT, BRANCH_STORAGE_KEY } from "./branch-storage";
 
+function readBranchNames(): string[] {
+  const raw = window.localStorage.getItem(BRANCH_STORAGE_KEY);
+  if (!raw) return [];
+  try {
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed)) return parsed;
+  } catch {
+    // Legacy format from before branches were stored as JSON: a plain
+    // ", "-joined string. Recover it instead of dropping the selection.
+    return raw.split(", ").filter(Boolean);
+  }
+  return [];
+}
+
 export default function BranchBadge() {
-  const [branch, setBranch] = useState<string | null>(null);
+  const [names, setNames] = useState<string[]>([]);
 
   useEffect(() => {
     function sync() {
-      setBranch(window.localStorage.getItem(BRANCH_STORAGE_KEY));
+      setNames(readBranchNames());
     }
     sync();
     window.addEventListener(BRANCH_CHANGE_EVENT, sync);
@@ -20,32 +34,32 @@ export default function BranchBadge() {
     };
   }, []);
 
-  if (!branch) {
+  if (names.length === 0) {
     return (
-      <div className="border-b border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-900">
-        <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-6 py-1.5 text-xs text-slate-500 dark:text-slate-400">
-          <span>Noch keine Branche ausgewählt</span>
-          <Link
-            href="/onboarding"
-            className="font-medium text-blue-600 hover:underline dark:text-blue-400"
-          >
-            Branche wählen
-          </Link>
-        </div>
-      </div>
+      <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+        Noch keine Branche ausgewählt ·{" "}
+        <Link
+          href="/onboarding"
+          className="font-medium text-blue-600 hover:underline dark:text-blue-400"
+        >
+          Branche wählen
+        </Link>
+      </p>
     );
   }
 
+  const label = names.length === 1 ? "Ausgewählte Branche" : "Ausgewählte Branchen";
+
   return (
-    <div className="border-b border-blue-100 bg-blue-50 dark:border-blue-950 dark:bg-blue-950/40">
-      <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-6 py-1.5 text-xs text-blue-800 dark:text-blue-200">
-        <span>
-          Ausgewählte Branche: <strong className="font-semibold">{branch}</strong>
-        </span>
-        <Link href="/onboarding" className="font-medium hover:underline">
-          Ändern
-        </Link>
-      </div>
-    </div>
+    <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+      {label}: <span className="font-medium text-slate-700 dark:text-slate-300">{names.join(", ")}</span>{" "}
+      ·{" "}
+      <Link
+        href="/onboarding"
+        className="font-medium text-blue-600 hover:underline dark:text-blue-400"
+      >
+        Ändern
+      </Link>
+    </p>
   );
 }

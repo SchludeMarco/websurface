@@ -27,13 +27,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         />
       </head>
       <body className="min-h-full flex flex-col bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
-        <BranchBadge />
-
         <header className="border-b border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
           <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-4">
-            <Link href="/" className="text-lg font-semibold tracking-tight">
-              WebSurface
-            </Link>
+            <div>
+              <Link href="/" className="text-lg font-semibold tracking-tight">
+                WebSurface
+              </Link>
+              <BranchBadge />
+            </div>
             <nav className="flex gap-6 text-sm font-medium text-slate-600 dark:text-slate-400">
               {navItems.map((item) => (
                 <Link

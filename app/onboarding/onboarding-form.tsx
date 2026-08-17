@@ -36,9 +36,8 @@ export default function OnboardingForm({
 
     const branchNames = sectors
       .filter((sector) => selected.has(sector.slug))
-      .map((sector) => sector.name)
-      .join(", ");
-    window.localStorage.setItem(BRANCH_STORAGE_KEY, branchNames);
+      .map((sector) => sector.name);
+    window.localStorage.setItem(BRANCH_STORAGE_KEY, JSON.stringify(branchNames));
     window.dispatchEvent(new Event(BRANCH_CHANGE_EVENT));
 
     router.push(`/ideen?${params.toString()}`);
